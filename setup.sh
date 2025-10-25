@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-DOTS_DIR="$HOME/.dotfiles"
+DOTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+echo "$DOTS_DIR"
 CONFIG_DIR="$HOME/.config"
 
 # ===============================
@@ -137,19 +138,17 @@ main() {
 
 	for item in $selected; do
 		case "$item" in
-		Neovim) echo "test" ;;     # install_nvim ;;
-		Tmux) echo "test" ;;       #   install_tmux ;;
-		Lazygit) echo "test" ;;    #  install_lazygit ;;
-		Lazydocker) echo "test" ;; #  install_lazydocker ;;
-		Font) echo "test" ;;       #  install_nerd_font ;;
-		All) echo "test" ;;        #
-			# install_nvim
-			# install_tmux
-			# install_lazygit
-			# install_lazydocker
-			# install_nerd_font
-			# break
-			# ;;
+		Neovim) install_nvim ;;
+		Tmux) install_tmux ;;
+		Lazygit) install_lazygit ;;
+		Lazydocker) install_lazydocker ;;
+		Font) install_nerd_font ;;
+		All)  install_nvim
+			    install_tmux
+			    install_lazygit
+			    install_lazydocker
+			    install_nerd_font
+			  break;;
 		esac
 	done
 
