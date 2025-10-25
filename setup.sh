@@ -2,7 +2,6 @@
 set -e
 
 DOTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-echo "$DOTS_DIR"
 CONFIG_DIR="$HOME/.config"
 
 # ===============================
@@ -86,6 +85,15 @@ install_nvim() {
 	link "$DOTS_DIR/nvim" "$CONFIG_DIR/nvim"
 }
 
+install_vim() {
+	if ! command -v vim &>/dev/null; then
+		install_pkg "vim"
+	else
+		echo "✅ Vim already installed."
+	fi
+	link "$DOTS_DIR/vim/.vimrc" "$HOME/.vimrc"
+}
+
 install_tmux() {
 	if ! command -v tmux &>/dev/null; then
 		install_pkg "tmux"
@@ -134,21 +142,25 @@ main() {
 	install_fzf
 
 	echo "🧩 Use arrow keys / space to select what to install. Press Enter when done."
-	selected=$(printf "Neovim\nTmux\nLazygit\nLazydocker\nFont\nAll" | fzf -m --prompt="Select items to install: ")
+	selected=$(printf "Vim\nNeovim\nTmux\nLazygit\nLazydocker\nFont\nAll" | fzf -m --prompt="Select items to install: ")
 
 	for item in $selected; do
 		case "$item" in
+		Vim) install_vim ;;
 		Neovim) install_nvim ;;
 		Tmux) install_tmux ;;
 		Lazygit) install_lazygit ;;
 		Lazydocker) install_lazydocker ;;
 		Font) install_nerd_font ;;
-		All)  install_nvim
-			    install_tmux
-			    install_lazygit
-			    install_lazydocker
-			    install_nerd_font
-			  break;;
+		All)
+			install_vim
+			install_nvim
+			install_tmux
+			install_lazygit
+			install_lazydocker
+			install_nerd_font
+			break
+			;;
 		esac
 	done
 
