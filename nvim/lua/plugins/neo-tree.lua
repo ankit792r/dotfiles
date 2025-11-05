@@ -14,12 +14,6 @@ return {
       sort_case_insensitive = true,
 
       filesystem = {
-        filtered_items = {
-          hide_dotfiles = false,
-          hide_gitignored = true,
-          hide_by_name = { "node_modules" },
-          always_show = { ".env" },
-        },
         follow_current_file = {
           enabled = true,
           leave_dirs_open = true,
